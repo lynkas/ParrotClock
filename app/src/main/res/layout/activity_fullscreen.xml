@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#000000"
+    tools:context=".FullscreenActivity">
+
+    <pl.pawelkleczkowski.customgauge.CustomGauge
+        android:id="@+id/p"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        app:gaugeEndValue="100"
+        app:gaugePointEndColor="#FF9800"
+        app:gaugePointStartColor="#009688"
+        app:gaugeStartAngle="135"
+        app:gaugeStartValue="0"
+        app:gaugeStrokeCap="ROUND"
+        app:gaugeStrokeColor="#959595"
+        app:gaugeStrokeWidth="24dp"
+        app:gaugeSweepAngle="270" />
+
+    <TextClock
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:format24Hour="HH:mm:ss"
+        android:layout_marginTop="8dp"
+        android:textColor="#FFFFFF"
+        android:textSize="128sp"
+
+        />
+
+    <ImageView
+        android:id="@+id/fullscreen_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/parrot"
+        android:layout_gravity="bottom|center_horizontal"
+        />
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="48sp"
+        android:textColor="#FFFFFF"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginTop="16dp"
+        />
+
+</FrameLayout>
