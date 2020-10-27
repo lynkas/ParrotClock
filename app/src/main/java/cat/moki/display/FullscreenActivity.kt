@@ -12,6 +12,7 @@ import android.view.WindowManager
 import android.widget.*
 import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.activity_fullscreen.*
 import pl.pawelkleczkowski.customgauge.CustomGauge
 import java.sql.Time
 import java.text.SimpleDateFormat
@@ -31,6 +32,7 @@ import kotlin.time.hours
 class FullscreenActivity : AppCompatActivity() {
     private lateinit var fullscreenContent: ImageView
     private lateinit var progress : CustomGauge
+    private lateinit var background : CustomGauge
     private lateinit var status : TextView
     private var startAt = intArrayOf(7,0)
     private var endAt = intArrayOf(22,30)
@@ -40,6 +42,7 @@ class FullscreenActivity : AppCompatActivity() {
     private var current = 0
     private var here = true
     private var nth30=0
+    private val timer = Timer()
 
     @SuppressLint("ClickableViewAccessibility", "SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,19 +66,15 @@ class FullscreenActivity : AppCompatActivity() {
 //        // operations to prevent the jarring behavior of controls going away
 //        // while interacting with the UI.
 //        findViewById<Button>(R.id.dummy_button).setOnTouchListener(delayHideTouchListener)
-
-        progress=findViewById(R.id.p)
-        status=findViewById(R.id.status)
+        progress=p
         switch(true)
-
-        for (i in arrayOf(updateProgress(),onTime()))i.start()
 
    }
 
     private fun updateProgress():Thread{
         return Thread{
             while (true){
-                Thread.sleep(1000)
+                Thread.sleep(5000)
                 runOnUiThread {
                     val per = percentage()
                     if (per<0){
@@ -86,12 +85,12 @@ class FullscreenActivity : AppCompatActivity() {
                         if (!active)switch(false)
                     }
                 }
+                val now = Calendar.getInstance().time
+                if (now.minutes%30==0&&now.minutes==nth30) {
+                    onTime().start()
+                    nth30 = abs(now.minutes - 30)
+                }
 
-//                val now = Calendar.getInstance().time
-//                if (now.minutes%30==0&&now.minutes==nth30){
-//                    onTime().start()
-//                    nth30= abs(now.minutes-30)
-//                }
             }
         }
     }
@@ -125,7 +124,7 @@ class FullscreenActivity : AppCompatActivity() {
             here=false
         }else{
             here=true
-            status.setText("")
+            status.text=""
         }
 
 
@@ -134,14 +133,14 @@ class FullscreenActivity : AppCompatActivity() {
     override fun onAttachedToWindow() {
     }
 
-    private fun onTime():Thread{
+    private fun onTime(): Thread {
         return Thread{
-            for (i in 1..3){
-                runOnUiThread { fullscreenContent.setBackgroundColor(resources.getColor(R.color.oclock)) }
-                Thread.sleep(1000)
-                runOnUiThread { fullscreenContent.setBackgroundColor(resources.getColor(R.color.black)) }
-                Thread.sleep(1000)
-            }
+                for (i in 1..3){
+                    runOnUiThread { layout.setBackgroundColor(resources.getColor(R.color.oclock)) }
+                    Thread.sleep(1000)
+                    runOnUiThread { layout.setBackgroundColor(resources.getColor(R.color.black)) }
+                    Thread.sleep(1000)
+                }
         }
     }
 
